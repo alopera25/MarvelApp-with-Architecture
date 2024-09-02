@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DetailViewModel(private val id: Int) : ViewModel() {
@@ -23,15 +24,9 @@ class DetailViewModel(private val id: Int) : ViewModel() {
 
     data class UiState(
         val loading: Boolean = false,
-        val character: Character? = null
+        val character: Character? = null,
+        val message: String? = null
     )
-
-    sealed interface UiEvent {
-        data class ShowMessage(val message: String) : UiEvent
-    }
-
-    private val _events = Channel<UiEvent>()
-    val events = _events.receiveAsFlow()
 
     init {
         viewModelScope.launch {
@@ -41,6 +36,10 @@ class DetailViewModel(private val id: Int) : ViewModel() {
     }
 
     fun onFavoriteClicked() {
-        _events.trySend(UiEvent.ShowMessage("Favorite clicked"))
+        _state.update { it.copy(message = "Favorite clicked") }
+    }
+
+    fun onMessageShown() {
+        _state.update { it.copy(message = null) }
     }
 }

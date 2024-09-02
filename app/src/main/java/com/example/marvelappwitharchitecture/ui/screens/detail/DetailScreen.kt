@@ -43,16 +43,11 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(vm, lifecycle) {
-        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            vm.events.collect { event ->
-                when (event) {
-                    is DetailViewModel.UiEvent.ShowMessage -> {
-                        snackbarHostState.currentSnackbarData?.dismiss()
-                        snackbarHostState.showSnackbar(event.message)
-                    }
-                }
-            }
+    LaunchedEffect(state.message) {
+        state.message?.let {
+            snackbarHostState.currentSnackbarData?.dismiss()
+            snackbarHostState.showSnackbar(it)
+            vm.onMessageShown()
         }
     }
     Screen {
