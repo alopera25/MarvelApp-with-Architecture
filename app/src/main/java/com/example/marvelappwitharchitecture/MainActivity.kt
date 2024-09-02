@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
@@ -22,7 +21,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.marvelappwitharchitecture.ui.theme.MarvelAppWithArchitectureTheme
 
 class MainActivity : ComponentActivity() {
@@ -50,7 +51,10 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun CharacterItem(character: Character) {
         Column {
-            Box(
+            AsyncImage(
+                model = character.thumbnail,
+                contentDescription = character.name,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(2 / 3f)

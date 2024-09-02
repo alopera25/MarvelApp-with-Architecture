@@ -10,6 +10,6 @@ val characters = (1..100).map {
     Character(
         id = it,
         name = "Character $it",
-        thumbnail = "https://picsum.photos/400/400"
+        thumbnail = "https://picsum.photos/200/300?id=$it"
     )
 }
