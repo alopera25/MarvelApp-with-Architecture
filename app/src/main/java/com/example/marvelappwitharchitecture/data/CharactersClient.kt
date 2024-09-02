@@ -1,24 +1,30 @@
 package com.example.marvelappwitharchitecture.data
 
 import com.example.marvelappwitharchitecture.BuildConfig
-import okhttp3.Interceptor
-import okhttp3.Response
-import retrofit2.Retrofit
-import retrofit2.create
 import java.math.BigInteger
 import java.security.MessageDigest
-
+import kotlinx.serialization.json.Json
+import okhttp3.Interceptor
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.Response
+import retrofit2.Retrofit
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
+import retrofit2.create
 
 object CharactersClient {
 
     private val okHttpClient = okhttp3.OkHttpClient.Builder()
         .addInterceptor(::apiKeyAsQuery)
         .build()
-
+    
+    private val json = Json {
+        ignoreUnknownKeys = true
+    }
 
     val instance: CharactersService = Retrofit.Builder()
         .baseUrl("https://gateway.marvel.com")
         .client(okHttpClient)
+        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build()
         .create<CharactersService>()
 
@@ -45,7 +51,9 @@ private fun apiKeyAsQuery(chain: Interceptor.Chain): Response {
     val request = requestBuilder.build()
     return chain.proceed(request)
 }
+
 fun String.md5(): String {
     val bytes = MessageDigest.getInstance("MD5").digest(this.toByteArray())
     return BigInteger(1, bytes).toString(16).padStart(32, '0')
 }
+
