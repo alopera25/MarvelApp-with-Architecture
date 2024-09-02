@@ -16,7 +16,7 @@ object CharactersClient {
     private val okHttpClient = okhttp3.OkHttpClient.Builder()
         .addInterceptor(::apiKeyAsQuery)
         .build()
-    
+
     private val json = Json {
         ignoreUnknownKeys = true
     }
