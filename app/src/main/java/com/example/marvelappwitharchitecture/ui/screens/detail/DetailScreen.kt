@@ -21,7 +21,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.marvelappwitharchitecture.Character
+import com.example.marvelappwitharchitecture.data.Character
 import com.example.marvelappwitharchitecture.R
 import com.example.marvelappwitharchitecture.ui.screens.Screen
 

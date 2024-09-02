@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.marvelappwitharchitecture.ui.screens.detail.DetailScreen
-import com.example.marvelappwitharchitecture.characters
+import com.example.marvelappwitharchitecture.data.characters
 import com.example.marvelappwitharchitecture.ui.screens.home.HomeScreen
 
 @Composable

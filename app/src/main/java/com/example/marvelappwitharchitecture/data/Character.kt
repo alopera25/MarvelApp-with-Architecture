@@ -1,4 +1,4 @@
-package com.example.marvelappwitharchitecture
+package com.example.marvelappwitharchitecture.data
 
 data class Character(
     val id: Int,
