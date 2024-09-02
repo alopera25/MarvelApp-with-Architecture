@@ -40,10 +40,10 @@ fun HomeScreen(
     onCharacterClick: (Character) -> Unit,
     vm: HomeViewModel = viewModel()
 ) {
-    vm.onUiReady()
+    val homeState = rememberHomeState()
 
     Screen {
-        val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+        val scrollBehavior = homeState.scrollBehavior
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -51,7 +51,7 @@ fun HomeScreen(
                     scrollBehavior = scrollBehavior,
                 )
             },
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            modifier = Modifier.nestedScroll(homeState.scrollBehavior.nestedScrollConnection),
             contentWindowInsets = WindowInsets.safeDrawing,
         ) { padding ->
             val state by vm.state.collectAsState()

@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
@@ -37,18 +38,15 @@ import com.example.marvelappwitharchitecture.data.Character
 import com.example.marvelappwitharchitecture.ui.common.LoadingIndicator
 import com.example.marvelappwitharchitecture.ui.screens.Screen
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
+    val detailState = rememberDetailState()
+
     val state by vm.state.collectAsState()
     val lifecycle = LocalLifecycleOwner.current.lifecycle
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    LaunchedEffect(state.message) {
-        state.message?.let {
-            snackbarHostState.currentSnackbarData?.dismiss()
-            snackbarHostState.showSnackbar(it)
-            vm.onMessageShown()
-        }
+    detailState.ShowMessageEffect(message = state.message) {
+        vm.onMessageShown()
     }
     Screen {
         Scaffold(
@@ -64,7 +62,8 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
                     )
                 }
             },
-            snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+            snackbarHost = { SnackbarHost(hostState = detailState.snackbarHostState) },
+            modifier = Modifier.nestedScroll(detailState.scrollBehavior.nestedScrollConnection)
         ) { padding ->
             if (state.loading) {
                 LoadingIndicator(modifier = Modifier.padding(padding))
