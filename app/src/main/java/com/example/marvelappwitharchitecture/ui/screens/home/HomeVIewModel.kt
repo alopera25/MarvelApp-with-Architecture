@@ -6,11 +6,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.marvelappwitharchitecture.data.Character
+import com.example.marvelappwitharchitecture.data.CharactersRepository
 import com.example.marvelappwitharchitecture.data.characters
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
+
+    private val repository: CharactersRepository = CharactersRepository()
 
     var state by mutableStateOf(UiState())
         private set
@@ -19,7 +22,7 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             state = UiState(loading = true)
             delay(1000)
-            state = UiState(loading = false, characters = characters)
+            state = UiState(loading = false, characters = repository.fetchCharacters())
         }
     }
 

@@ -40,10 +40,10 @@ import com.example.marvelappwitharchitecture.ui.screens.Screen
 @Composable
 fun HomeScreen(
     onCharacterClick: (Character) -> Unit,
-    vm: HomeViewModel = viewModel { HomeViewModel() }
+    vm: HomeViewModel = viewModel()
 ) {
     vm.onUiReady()
-    
+
     Screen {
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
         Scaffold(
