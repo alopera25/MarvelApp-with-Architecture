@@ -5,7 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RemoteResult(
-    val data: Data
+    val data: Data,
+    val results: List<RemoteCharacter>,
 )
 
 @Serializable

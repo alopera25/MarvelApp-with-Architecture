@@ -7,10 +7,7 @@ import retrofit2.http.Query
 interface CharactersService {
 
     @GET("/v1/public/characters")
-    suspend fun fetchCharacter(
-        @Query("offset") offset: Int,
-        @Query("limit") limit: Int
-    ): RemoteResult
+    suspend fun fetchCharacters(): RemoteResult
 
     @GET("/v1/public/characters/{characterId}")
     suspend fun fetchCharacterById(@Path("characterId") characterId: Int): RemoteResult

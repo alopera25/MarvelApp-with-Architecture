@@ -33,7 +33,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.marvelappwitharchitecture.R
 import com.example.marvelappwitharchitecture.data.Character
-import com.example.marvelappwitharchitecture.data.characters
 import com.example.marvelappwitharchitecture.ui.screens.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
