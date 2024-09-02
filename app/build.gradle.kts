@@ -27,7 +27,7 @@ android {
 
     val marvelApiKey = properties.getProperty("MARVEL_API_KEY", "")
     buildConfigField("String", "MARVEL_API_KEY", "\"$marvelApiKey\"")
-        
+
     val marvelPrivateApiKey = properties.getProperty("MARVEL_PRIVATE_API_KEY", "")
     buildConfigField("String", "MARVEL_PRIVATE_API_KEY", "\"$marvelPrivateApiKey\"")
     }
@@ -71,6 +71,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.coil.compose)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.retrofit)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
