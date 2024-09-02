@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -19,6 +21,15 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+    val properties = Properties()
+    properties.load(project.rootProject.file("local.properties").readText().byteInputStream())
+
+    val marvelApiKey = properties.getProperty("MARVEL_API_KEY", "")
+    buildConfigField("String", "MARVEL_API_KEY", "\"$marvelApiKey\"")
+        
+    val marvelPrivateApiKey = properties.getProperty("MARVEL_PRIVATE_API_KEY", "")
+    buildConfigField("String", "MARVEL_PRIVATE_API_KEY", "\"$marvelPrivateApiKey\"")
     }
 
     buildTypes {
@@ -39,6 +50,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     packaging {
         resources {
