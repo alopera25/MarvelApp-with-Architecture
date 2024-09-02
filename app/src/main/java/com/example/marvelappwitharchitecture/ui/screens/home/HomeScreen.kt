@@ -1,6 +1,7 @@
 package com.example.marvelappwitharchitecture.ui.screens.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -32,7 +33,7 @@ import com.example.marvelappwitharchitecture.ui.screens.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(onCharacterClick: (Character) -> Unit ) {
     Screen {
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
         Scaffold(
@@ -53,7 +54,7 @@ fun HomeScreen() {
                 modifier = Modifier.padding(horizontal = 4.dp)
             ) {
                 items(characters, key = { it.id }) {
-                    CharacterItem(character = it)
+                    CharacterItem(character = it)  { onCharacterClick(it) }
                 }
             }
         }
@@ -61,8 +62,10 @@ fun HomeScreen() {
 }
 
 @Composable
-fun CharacterItem(character: Character) {
-    Column {
+fun CharacterItem(character: Character, onClick: () -> Unit) {
+    Column(
+    modifier = Modifier.clickable(onClick = onClick)
+    ) {
         AsyncImage(
             model = character.thumbnail,
             contentDescription = character.name,
