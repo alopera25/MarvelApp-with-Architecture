@@ -1,4 +1,4 @@
-package com.example.marvelappwitharchitecture.ui.screens
+package com.example.marvelappwitharchitecture.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -14,17 +14,17 @@ import com.example.marvelappwitharchitecture.ui.screens.home.HomeScreen
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "home") {
-        composable("home") {
+    NavHost(navController = navController, startDestination = NavScreen.Home.route) {
+        composable(NavScreen.Home.route) {
             HomeScreen(onCharacterClick = { character ->
-                navController.navigate("detail/${character.id}")
+                navController.navigate(NavScreen.Detail.createRoute(character.id))
             })
         }
         composable(
-            route = "detail/{characterId}",
-            arguments = listOf(navArgument("characterId") { type = NavType.IntType })
+            route = NavScreen.Detail.route,
+            arguments = listOf(navArgument(NavArgs.CharacterId.key) { type = NavType.IntType })
         ) { backStackEntry ->
-            val characterId = requireNotNull(backStackEntry.arguments?.getInt("characterId"))
+            val characterId = requireNotNull(backStackEntry.arguments?.getInt(NavArgs.CharacterId.key))
             DetailScreen(
                 viewModel { DetailViewModel(characterId) },
                 onBack = { navController.popBackStack() })
