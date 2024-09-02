@@ -8,20 +8,23 @@ import androidx.lifecycle.viewModelScope
 import com.example.marvelappwitharchitecture.data.Character
 import com.example.marvelappwitharchitecture.data.CharactersRepository
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
 
     private val repository: CharactersRepository = CharactersRepository()
 
-    var state by mutableStateOf(UiState())
-        private set
+    private val _state = MutableStateFlow(UiState())
+    val state: StateFlow<UiState> = _state.asStateFlow()
 
     fun onUiReady() {
         viewModelScope.launch {
-            state = UiState(loading = true)
+            _state.value = UiState(loading = true)
             delay(1000)
-            state = UiState(loading = false, characters = repository.fetchCharacters())
+            _state.value = UiState(loading = false, characters = repository.fetchCharacters())
         }
     }
 

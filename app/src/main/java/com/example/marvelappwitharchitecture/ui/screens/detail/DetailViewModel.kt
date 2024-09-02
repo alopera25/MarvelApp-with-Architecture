@@ -7,14 +7,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.marvelappwitharchitecture.data.Character
 import com.example.marvelappwitharchitecture.data.CharactersRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class DetailViewModel(private val id: Int) : ViewModel() {
 
     private val repository: CharactersRepository = CharactersRepository()
 
-    var state by mutableStateOf(UiState())
-        private set
+    private val _state = MutableStateFlow(UiState())
+    val state: StateFlow<UiState> = _state.asStateFlow()
 
     data class UiState(
         val loading: Boolean = false,
@@ -23,8 +26,8 @@ class DetailViewModel(private val id: Int) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            state = UiState(loading = true)
-            state = UiState(loading = false, character = repository.fetchCharacterById(id))
+            _state.value = UiState(loading = true)
+            _state.value = UiState(loading = false, character = repository.fetchCharacterById(id))
         }
     }
 }
