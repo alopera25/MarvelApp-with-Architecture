@@ -33,6 +33,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.marvelappwitharchitecture.R
 import com.example.marvelappwitharchitecture.data.Character
+import com.example.marvelappwitharchitecture.ui.common.LoadingIndicator
 import com.example.marvelappwitharchitecture.ui.screens.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,12 +59,7 @@ fun HomeScreen(
             val state = vm.state
 
             if (state.loading) {
-                Box(
-                    modifier = Modifier.fillMaxSize().padding(padding),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
+                LoadingIndicator()
             }
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(120.dp),
