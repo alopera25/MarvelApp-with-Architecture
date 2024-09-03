@@ -1,4 +1,4 @@
-package com.example.marvelappwitharchitecture.data.datasource.remote
+package com.example.marvelappwitharchitecture.framework.remote
 
 import retrofit2.http.GET
 import retrofit2.http.Path

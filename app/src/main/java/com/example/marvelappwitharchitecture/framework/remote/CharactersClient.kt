@@ -1,4 +1,4 @@
-package com.example.marvelappwitharchitecture.data.datasource.remote
+package com.example.marvelappwitharchitecture.framework.remote
 
 import com.example.marvelappwitharchitecture.BuildConfig
 import kotlinx.serialization.json.Json

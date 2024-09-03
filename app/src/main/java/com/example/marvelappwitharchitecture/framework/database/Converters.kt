@@ -1,7 +1,7 @@
-package com.example.marvelappwitharchitecture.data.datasource.database
+package com.example.marvelappwitharchitecture.framework.database
 
 import androidx.room.TypeConverter
-import com.example.marvelappwitharchitecture.data.datasource.remote.Thumbnail
+import com.example.marvelappwitharchitecture.framework.remote.Thumbnail
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 

@@ -1,10 +1,9 @@
-package com.example.marvelappwitharchitecture.data.datasource.database
+package com.example.marvelappwitharchitecture.framework.database
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.marvelappwitharchitecture.domain.Character
 import kotlinx.coroutines.flow.Flow
 
 @Dao

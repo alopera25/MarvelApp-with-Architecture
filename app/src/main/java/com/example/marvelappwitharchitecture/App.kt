@@ -2,7 +2,7 @@ package com.example.marvelappwitharchitecture
 
 import android.app.Application
 import androidx.room.Room
-import com.example.marvelappwitharchitecture.data.datasource.database.CharacterDatabase
+import com.example.marvelappwitharchitecture.framework.database.CharacterDatabase
 
 class App : Application() {
 

@@ -1,6 +1,6 @@
 package com.example.marvelappwitharchitecture.domain
 
-import com.example.marvelappwitharchitecture.data.datasource.remote.Thumbnail
+import com.example.marvelappwitharchitecture.framework.remote.Thumbnail
 
 data class Character(
     val id: Int?,

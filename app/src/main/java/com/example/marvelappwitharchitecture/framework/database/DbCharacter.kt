@@ -1,8 +1,8 @@
-package com.example.marvelappwitharchitecture.data.datasource.database
+package com.example.marvelappwitharchitecture.framework.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.marvelappwitharchitecture.data.datasource.remote.Thumbnail
+import com.example.marvelappwitharchitecture.framework.remote.Thumbnail
 
 @Entity
 data class DbCharacter(
