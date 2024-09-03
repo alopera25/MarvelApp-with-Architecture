@@ -10,8 +10,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.marvelappwitharchitecture.App
 import com.example.marvelappwitharchitecture.data.CharacterRepository
-import com.example.marvelappwitharchitecture.data.datasource.CharacterLocalDataSource
-import com.example.marvelappwitharchitecture.data.datasource.CharacterRemoteDataSource
+import com.example.marvelappwitharchitecture.data.datasource.CharacterRoomDataSource
+import com.example.marvelappwitharchitecture.data.datasource.CharacterServerDataSource
+import com.example.marvelappwitharchitecture.data.datasource.remote.CharactersClient
 import com.example.marvelappwitharchitecture.ui.screens.detail.DetailScreen
 import com.example.marvelappwitharchitecture.ui.screens.detail.DetailViewModel
 import com.example.marvelappwitharchitecture.ui.screens.home.HomeScreen
@@ -26,8 +27,8 @@ fun Navigation() {
     val app = LocalContext.current.applicationContext as App
 
     val characterRepository= CharacterRepository(
-        CharacterRemoteDataSource(),
-        CharacterLocalDataSource(app.db.characterDao()),
+        CharacterServerDataSource(CharactersClient.instance),
+        CharacterRoomDataSource(app.db.characterDao()),
     )
 
     NavHost(navController = navController, startDestination = NavScreen.Home.route) {

@@ -6,14 +6,21 @@ import com.example.marvelappwitharchitecture.domain.Character
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class CharacterLocalDataSource(private val characterDao: CharacterDao) {
+interface CharacterLocalDataSource {
+    val character: Flow<List<Character>>
+    fun fetchCharacterById(id: Int): Flow<Character?>
 
-val character: Flow<List<Character>> = characterDao.fetchCharacter().map { it.toDomainCharacters() }
+    suspend fun saveCharacter(character: List<Character>)
+}
 
-fun fetchCharacterById(id: Int): Flow<Character?> =
+class CharacterRoomDataSource(private val characterDao: CharacterDao) : CharacterLocalDataSource {
+
+override val character: Flow<List<Character>> = characterDao.fetchCharacter().map { it.toDomainCharacters() }
+
+override fun fetchCharacterById(id: Int): Flow<Character?> =
     characterDao.fetchCharacterById(id).map { it?.toDomainCharacter() }
 
-suspend fun saveCharacter(character: List<Character>) = characterDao.saveCharacter(character.toDbCharacters())
+override suspend fun saveCharacter(character: List<Character>) = characterDao.saveCharacter(character.toDbCharacters())
 
 }
 

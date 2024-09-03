@@ -2,16 +2,25 @@ package com.example.marvelappwitharchitecture.data.datasource
 
 import com.example.marvelappwitharchitecture.domain.Character
 import com.example.marvelappwitharchitecture.data.datasource.remote.CharactersClient
+import com.example.marvelappwitharchitecture.data.datasource.remote.CharactersService
 import com.example.marvelappwitharchitecture.data.datasource.remote.RemoteCharacter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class CharacterRemoteDataSource {
+interface CharacterRemoteDataSource {
+    suspend fun fetchCharacters(offset: Int, limit: Int): List<Character>?
 
-    suspend fun fetchCharacters(offset: Int, limit: Int): List<Character>? =
+    suspend fun fetchCharacterById(characterId: Int): Character?
+}
+
+class CharacterServerDataSource(
+    private val charactersService: CharactersService
+) : CharacterRemoteDataSource {
+
+    override suspend fun fetchCharacters(offset: Int, limit: Int): List<Character>? =
         withContext(Dispatchers.IO) {
             try {
-                CharactersClient.instance.fetchCharacter(offset, limit)
+                charactersService.fetchCharacter(offset, limit)
                     .data
                     .results
                     .map { it.toDomainModel() }
@@ -21,9 +30,9 @@ class CharacterRemoteDataSource {
             }
         }
 
-    suspend fun fetchCharacterById(characterId: Int): Character? = withContext(Dispatchers.IO) {
+    override suspend fun fetchCharacterById(characterId: Int): Character? = withContext(Dispatchers.IO) {
         try {
-            CharactersClient.instance.fetchCharacterById(characterId)
+            charactersService.fetchCharacterById(characterId)
                 .data
                 .results
                 .firstOrNull()
