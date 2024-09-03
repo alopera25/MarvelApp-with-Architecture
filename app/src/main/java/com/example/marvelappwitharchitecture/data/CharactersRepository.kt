@@ -2,6 +2,8 @@ package com.example.marvelappwitharchitecture.data
 
 import com.example.marvelappwitharchitecture.data.datasource.CharacterLocalDataSource
 import com.example.marvelappwitharchitecture.data.datasource.CharacterRemoteDataSource
+import com.example.marvelappwitharchitecture.data.datasource.database.DbCharacter
+import com.example.marvelappwitharchitecture.domain.Character
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
@@ -16,13 +18,6 @@ class CharacterRepository(
             localDataSource.saveCharacter(remoteCharacters!!)
         }
     }
-
-    /* private val _characters = MutableStateFlow<List<Character>>(emptyList())
-
-     suspend fun fetchCharacters(offset: Int, limit: Int) {
-         val newCharacters: List<Character> = characterRemoteDataSource.fetchCharacters(offset, limit) ?: return
-         _characters.update { it + newCharacters }
-     }*/
 
     fun fetchCharacterById(id: Int): Flow<Character> = localDataSource.fetchCharacterById(id)
         .onEach { character ->

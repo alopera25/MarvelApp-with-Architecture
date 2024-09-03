@@ -1,6 +1,6 @@
 package com.example.marvelappwitharchitecture.data.datasource
 
-import com.example.marvelappwitharchitecture.data.Character
+import com.example.marvelappwitharchitecture.domain.Character
 import com.example.marvelappwitharchitecture.data.datasource.remote.CharactersClient
 import com.example.marvelappwitharchitecture.data.datasource.remote.RemoteCharacter
 import kotlinx.coroutines.Dispatchers

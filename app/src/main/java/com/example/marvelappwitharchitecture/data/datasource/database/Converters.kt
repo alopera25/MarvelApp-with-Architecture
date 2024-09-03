@@ -4,7 +4,6 @@ import androidx.room.TypeConverter
 import com.example.marvelappwitharchitecture.data.datasource.remote.Thumbnail
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import com.example.marvelappwitharchitecture.data.Character
 
 class Converters {
     private val json = Json { ignoreUnknownKeys = true }

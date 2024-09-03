@@ -1,7 +1,7 @@
 package com.example.marvelappwitharchitecture.usecases
 
 import com.example.marvelappwitharchitecture.data.CharacterRepository
-import com.example.marvelappwitharchitecture.data.Character
+import com.example.marvelappwitharchitecture.domain.Character
 import kotlinx.coroutines.flow.Flow
 
 class FindCharacterByIdUseCase(private val repository: CharacterRepository) {

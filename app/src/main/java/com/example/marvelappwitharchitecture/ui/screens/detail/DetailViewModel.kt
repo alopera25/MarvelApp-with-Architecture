@@ -3,7 +3,7 @@ package com.example.marvelappwitharchitecture.ui.screens.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.marvelappwitharchitecture.Result
-import com.example.marvelappwitharchitecture.data.Character
+import com.example.marvelappwitharchitecture.domain.Character
 import com.example.marvelappwitharchitecture.ifSuccess
 import com.example.marvelappwitharchitecture.stateAsResultIn
 import com.example.marvelappwitharchitecture.usecases.FindCharacterByIdUseCase
