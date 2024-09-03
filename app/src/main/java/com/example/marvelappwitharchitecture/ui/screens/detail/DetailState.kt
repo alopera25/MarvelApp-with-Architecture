@@ -5,29 +5,27 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import com.example.marvelappwitharchitecture.Result
+import com.example.marvelappwitharchitecture.data.Character
 
 @OptIn(ExperimentalMaterial3Api::class)
 class DetailState(
+    private val state: Result<Character>,
     val scrollBehavior: TopAppBarScrollBehavior,
     val snackbarHostState: SnackbarHostState
 ) {
-    @Composable
-    fun ShowMessageEffect(message: String?, onMessageShown: () -> Unit) {
-        LaunchedEffect(message) {
-            message?.let {
-                snackbarHostState.currentSnackbarData?.dismiss()
-                snackbarHostState.showSnackbar(it)
-                onMessageShown()
-            }
-        }
-    }
+    val character: Character?
+        get() = (state as? Result.Success)?.data
+
+    val topBarTitle: String
+        get() = character?.name ?: ""
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun rememberDetailState(
+    state: Result<Character>,
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
-) = remember { DetailState(scrollBehavior, snackbarHostState) }
+) = remember(state) { DetailState(state, scrollBehavior, snackbarHostState) }

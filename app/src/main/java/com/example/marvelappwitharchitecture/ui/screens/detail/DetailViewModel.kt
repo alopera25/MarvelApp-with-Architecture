@@ -1,45 +1,31 @@
 package com.example.marvelappwitharchitecture.ui.screens.detail
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.marvelappwitharchitecture.Result
 import com.example.marvelappwitharchitecture.data.Character
-import com.example.marvelappwitharchitecture.data.CharactersRepository
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.example.marvelappwitharchitecture.ifSuccess
+import com.example.marvelappwitharchitecture.stateAsResultIn
+import com.example.marvelappwitharchitecture.usecases.FindCharacterByIdUseCase
+import com.example.marvelappwitharchitecture.usecases.ToggleFavoriteUseCase
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class DetailViewModel(private val id: Int) : ViewModel() {
+class DetailViewModel(
+    id: Int,
+    findMovieByIdUseCase: FindCharacterByIdUseCase,
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase
+) : ViewModel() {
 
-    private val repository: CharactersRepository = CharactersRepository()
+    val state: StateFlow<Result<Character>> = findMovieByIdUseCase(id)
+        .stateAsResultIn(scope = viewModelScope)
 
-    private val _state = MutableStateFlow(UiState())
-    val state: StateFlow<UiState> = _state.asStateFlow()
-
-    data class UiState(
-        val loading: Boolean = false,
-        val character: Character? = null,
-        val message: String? = null
-    )
-
-    init {
-        viewModelScope.launch {
-            _state.value = UiState(loading = true)
-            _state.value = UiState(loading = false, character = repository.fetchCharacterById(id))
+    fun onFavoriteClicked() {
+        state.value.ifSuccess {
+            viewModelScope.launch {
+                toggleFavoriteUseCase(it)
+            }
         }
     }
 
-    fun onFavoriteClicked() {
-        _state.update { it.copy(message = "Favorite clicked") }
-    }
-
-    fun onMessageShown() {
-        _state.update { it.copy(message = null) }
-    }
 }

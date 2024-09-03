@@ -1,27 +1,39 @@
 package com.example.marvelappwitharchitecture.data
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
+import com.example.marvelappwitharchitecture.data.datasource.CharacterLocalDataSource
+import com.example.marvelappwitharchitecture.data.datasource.CharacterRemoteDataSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.onEach
 
-class CharactersRepository {
+class CharacterRepository(
+    private val characterRemoteDataSource: CharacterRemoteDataSource,
+    private val localDataSource: CharacterLocalDataSource
+) {
+    val characters: Flow<List<Character>> = localDataSource.character.onEach { localCharacters ->
+        if (localCharacters.isEmpty()) {
+            val remoteCharacters = characterRemoteDataSource.fetchCharacters(offset = 0, limit = 20)
+            localDataSource.saveCharacter(remoteCharacters!!)
+        }
+    }
 
-    suspend fun fetchCharacters(): List<Character> =
-        CharactersClient.instance.fetchCharacters()
-            .results
-            .map { it.toDomainModel() }
+    /* private val _characters = MutableStateFlow<List<Character>>(emptyList())
 
-    suspend fun fetchCharacterById(id: Int): Character? =
-        CharactersClient.instance.fetchCharacterById(id)
-            .data
-            .results
-            .firstOrNull()
-            ?.toDomainModel()
+     suspend fun fetchCharacters(offset: Int, limit: Int) {
+         val newCharacters: List<Character> = characterRemoteDataSource.fetchCharacters(offset, limit) ?: return
+         _characters.update { it + newCharacters }
+     }*/
 
+    fun fetchCharacterById(id: Int): Flow<Character> = localDataSource.fetchCharacterById(id)
+        .onEach { character ->
+            if (character == null) {
+                val remoteCharacter = characterRemoteDataSource.fetchCharacterById(id)
+                localDataSource.saveCharacter(listOf(remoteCharacter!!))
+            }
+        }
+        .filterNotNull()
+
+    suspend fun toggleFavorite(character: Character) {
+        localDataSource.saveCharacter(listOf(character.copy(isFavorite = !character.isFavorite)))
+    }
 }
-
-private fun RemoteCharacter.toDomainModel() = Character(
-    id = id,
-    name = name,
-    thumbnail = "https://image.tmdb.org/t/p/w185/1",
-)

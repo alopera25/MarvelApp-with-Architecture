@@ -1,35 +1,24 @@
 package com.example.marvelappwitharchitecture.ui.screens.home
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.marvelappwitharchitecture.data.Character
-import com.example.marvelappwitharchitecture.data.CharactersRepository
-import kotlinx.coroutines.delay
+import com.example.marvelappwitharchitecture.stateAsResultIn
+import com.example.marvelappwitharchitecture.Result
+import com.example.marvelappwitharchitecture.usecases.FetchCharactersUseCase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapLatest
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val fetchCharactersUseCase: FetchCharactersUseCase) : ViewModel() {
 
-    private val repository: CharactersRepository = CharactersRepository()
+    private val uiReady = MutableStateFlow(true)
 
-    private val _state = MutableStateFlow(UiState())
-    val state: StateFlow<UiState> = _state.asStateFlow()
-
-    fun onUiReady() {
-        viewModelScope.launch {
-            _state.value = UiState(loading = true)
-            delay(1000)
-            _state.value = UiState(loading = false, characters = repository.fetchCharacters())
-        }
-    }
-
-    data class UiState(
-        val loading: Boolean = false,
-        val characters: List<Character> = emptyList()
-    )
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val state: StateFlow<Result<List<Character>>> = uiReady
+        .filter { it }
+        .flatMapLatest { fetchCharactersUseCase() }
+        .stateAsResultIn(viewModelScope)
 }

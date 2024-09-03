@@ -1,123 +1,134 @@
 package com.example.marvelappwitharchitecture.ui.screens.detail
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.repeatOnLifecycle
 import coil.compose.AsyncImage
 import com.example.marvelappwitharchitecture.R
-import com.example.marvelappwitharchitecture.data.Character
-import com.example.marvelappwitharchitecture.ui.common.LoadingIndicator
+import com.example.marvelappwitharchitecture.ui.common.AcScaffold
 import com.example.marvelappwitharchitecture.ui.screens.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
-    val detailState = rememberDetailState()
-
     val state by vm.state.collectAsState()
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
-    detailState.ShowMessageEffect(message = state.message) {
-        vm.onMessageShown()
-    }
+    val scrollState = rememberScrollState()
+    val detailState = rememberDetailState(state)
+    val snackbarHostState = remember { SnackbarHostState() }
+
     Screen {
-        Scaffold(
+        AcScaffold(
+            state = state,
             topBar = {
-                val topBarTitle = state.character?.name ?: ""
-                DetailTopBar(topBarTitle, onBack)
+                TopAppBar(
+                    title = { Text(text = "Details") },
+                    navigationIcon = {
+                        IconButton(onClick = onBack) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = stringResource(id = R.string.back)
+                            )
+                        }
+                    }
+                )
             },
             floatingActionButton = {
                 FloatingActionButton(onClick = { vm.onFavoriteClicked() }) {
+                    val favorite = detailState.character?.isFavorite ?: false
                     Icon(
-                        imageVector = Icons.Default.FavoriteBorder,
+                        imageVector = if (favorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                         contentDescription = stringResource(id = R.string.favorite)
                     )
                 }
             },
-            snackbarHost = { SnackbarHost(hostState = detailState.snackbarHostState) },
-            modifier = Modifier.nestedScroll(detailState.scrollBehavior.nestedScrollConnection)
-        ) { padding ->
-            if (state.loading) {
-                LoadingIndicator(modifier = Modifier.padding(padding))
-            }
-            state.character?.let {
-                CharacterDetail(
-                    character = it,
-                    modifier = Modifier.padding(padding)
+            snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+            contentWindowInsets = WindowInsets.safeDrawing
+        ) { padding, character ->
+
+
+            Column(
+                modifier = Modifier
+                    .padding(padding)
+                    .verticalScroll(scrollState)
+            ) {
+                val imageUrl = character.thumbnail?.let { "${it.path}.${it.extension}" }
+                AsyncImage(
+                    model = imageUrl,
+                    contentDescription = character.name,
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .clip(MaterialTheme.shapes.small)
+                        .parallaxLayoutModifier(
+                            scrollState,
+                            rate = 2
+                        )
+                )
+                Text(
+                    text = "Name:",
+                    modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp),
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Text(
+                    text = "${character.name}",
+                    modifier = Modifier.padding(start = 16.dp, bottom = 16.dp),
+                )
+                Text(
+                    text = "Description:",
+                    modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 8.dp),
+                    style = MaterialTheme.typography.titleLarge
+                )
+                val description = if (character.description.isNullOrEmpty()) {
+                    "No description available"
+                } else {
+                    character.description
+                }
+                Text(
+                    text = description,
+                    modifier = Modifier.padding(start = 16.dp, bottom = 16.dp),
                 )
             }
         }
     }
 }
 
-@Composable
-@OptIn(ExperimentalMaterial3Api::class)
-private fun DetailTopBar(
-    title: String,
-    onBack: () -> Unit
-) {
-    TopAppBar(
-        title = { Text(text = title) },
-        navigationIcon = {
-            IconButton(onClick = onBack) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                    contentDescription = stringResource(id = R.string.back)
-                )
-            }
+
+fun Modifier.parallaxLayoutModifier(scrollState: ScrollState, rate: Int) =
+    layout { measurable, constraints ->
+        val placeable = measurable.measure(constraints)
+        val height = if (rate > 0) scrollState.value / rate else scrollState.value
+        layout(placeable.width, placeable.height) {
+            placeable.place(0, height)
         }
-    )
-}
-
-@Composable
-private fun CharacterDetail(
-    character: Character,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier.verticalScroll(rememberScrollState())
-    ) {
-        AsyncImage(
-            model = character.thumbnail,
-            contentDescription = character.name,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(16 / 9f)
-        )
-
-        Text(
-            text = character.name,
-            modifier = Modifier.padding(16.dp),
-            style = MaterialTheme.typography.headlineMedium
-        )
     }
-}
+

@@ -1,21 +1,27 @@
-package com.example.marvelappwitharchitecture.data
+package com.example.marvelappwitharchitecture.data.datasource.remote
 
 import com.example.marvelappwitharchitecture.BuildConfig
-import java.math.BigInteger
-import java.security.MessageDigest
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Response
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import retrofit2.create
+import java.math.BigInteger
+import java.security.MessageDigest
 
 object CharactersClient {
 
     private val okHttpClient = okhttp3.OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+            else HttpLoggingInterceptor.Level.NONE
+        })
         .addInterceptor(::apiKeyAsQuery)
         .build()
+
 
     private val json = Json {
         ignoreUnknownKeys = true
@@ -56,4 +62,5 @@ fun String.md5(): String {
     val bytes = MessageDigest.getInstance("MD5").digest(this.toByteArray())
     return BigInteger(1, bytes).toString(16).padStart(32, '0')
 }
+
 
