@@ -35,7 +35,6 @@ import com.example.marvelappwitharchitecture.data.Character
 import com.example.marvelappwitharchitecture.ui.common.AcScaffold
 import com.example.marvelappwitharchitecture.ui.screens.Screen
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(

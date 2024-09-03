@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.marvelappwitharchitecture.ui.navigation.Navigation
-import com.example.marvelappwitharchitecture.ui.theme.MarvelAppWithArchitectureTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
