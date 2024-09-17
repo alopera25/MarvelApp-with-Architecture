@@ -76,7 +76,7 @@ private fun CharacterItem(character: Character, onClick: (Character) -> Unit) {
     Column(
         modifier = Modifier.clickable { onClick(character) }
     ) {
-        val imageUrl = character.thumbnail?.let { "${it.path}.${it.extension}" }
+        val imageUrl = character.thumbnail.orEmpty()
         Box {
             AsyncImage(
                 model = imageUrl,

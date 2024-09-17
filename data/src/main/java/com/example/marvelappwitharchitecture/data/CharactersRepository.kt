@@ -2,6 +2,7 @@ package com.example.marvelappwitharchitecture.data
 
 import com.example.marvelappwitharchitecture.data.datasource.CharacterLocalDataSource
 import com.example.marvelappwitharchitecture.data.datasource.CharacterRemoteDataSource
+import com.example.marvelappwitharchitecture.domain.Character
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
