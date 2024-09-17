@@ -80,7 +80,7 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
                     .padding(padding)
                     .verticalScroll(scrollState)
             ) {
-                val imageUrl = character.thumbnail?.let { "${it.path}.${it.extension}" }
+                val imageUrl = character.thumbnail.orEmpty()
                 AsyncImage(
                     model = imageUrl,
                     contentDescription = character.name,
@@ -114,7 +114,7 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
                     character.description
                 }
                 Text(
-                    text = description,
+                    text = description ?: "No description available",
                     modifier = Modifier.padding(start = 16.dp, bottom = 16.dp),
                 )
             }
