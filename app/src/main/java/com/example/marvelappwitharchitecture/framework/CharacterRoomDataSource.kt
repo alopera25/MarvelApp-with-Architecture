@@ -4,6 +4,7 @@ import com.example.marvelappwitharchitecture.data.datasource.CharacterLocalDataS
 import com.example.marvelappwitharchitecture.domain.Character
 import com.example.marvelappwitharchitecture.framework.database.CharacterDao
 import com.example.marvelappwitharchitecture.framework.database.DbCharacter
+import com.example.marvelappwitharchitecture.framework.remote.Thumbnail
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -18,12 +19,19 @@ override suspend fun saveCharacter(character: List<Character>) = characterDao.sa
 
 }
 
+fun Thumbnail.toDomainThumbnail() = "$path.$extension"
+
 private fun DbCharacter.toDomainCharacter() = Character(
     id = id,
     name = name,
     description = description,
-    thumbnail = thumbnail,
+    thumbnail = thumbnail?.toDomainThumbnail(),
     isFavorite = isFavorite
+)
+
+private fun String.toDbThumbnail() = Thumbnail(
+    path = substringBeforeLast("."),
+    extension = substringAfterLast(".")
 )
 
 private fun List<DbCharacter>.toDomainCharacters() = map { it.toDomainCharacter() }
@@ -32,7 +40,7 @@ private fun Character.toDbCharacter() = DbCharacter(
     id = id,
     name = name,
     description = description,
-    thumbnail = thumbnail,
+    thumbnail = thumbnail?.toDbThumbnail(),
     isFavorite = isFavorite
 )
 

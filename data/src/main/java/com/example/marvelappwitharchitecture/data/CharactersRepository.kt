@@ -5,6 +5,7 @@ import com.example.marvelappwitharchitecture.data.datasource.CharacterRemoteData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
+import com.example.marvelappwitharchitecture.domain.Character
 
 class CharacterRepository(
     private val characterRemoteDataSource: CharacterRemoteDataSource,

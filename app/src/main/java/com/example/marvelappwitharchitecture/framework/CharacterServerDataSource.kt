@@ -43,6 +43,6 @@ private fun RemoteCharacter.toDomainModel() = Character(
     id = id,
     name = name,
     description = description,
-    thumbnail = thumbnail,
-    false
+    isFavorite = false,
+    thumbnail = thumbnail?.toDomainThumbnail()
 )
