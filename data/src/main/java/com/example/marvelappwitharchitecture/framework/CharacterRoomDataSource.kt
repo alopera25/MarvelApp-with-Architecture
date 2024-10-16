@@ -1,6 +1,6 @@
 package com.example.marvelappwitharchitecture.framework
 
-import com.example.marvelappwitharchitecture.data.datasource.CharacterLocalDataSource
+import com.example.marvelappwitharchitecture.data.CharacterLocalDataSource
 import com.example.marvelappwitharchitecture.domain.Character
 import com.example.marvelappwitharchitecture.framework.database.CharacterDao
 import com.example.marvelappwitharchitecture.framework.database.DbCharacter
@@ -37,11 +37,11 @@ private fun String.toDbThumbnail() = Thumbnail(
 private fun List<DbCharacter>.toDomainCharacters() = map { it.toDomainCharacter() }
 
 private fun Character.toDbCharacter() = DbCharacter(
-    id = id,
-    name = name,
-    description = description,
-    thumbnail = thumbnail?.toDbThumbnail(),
-    isFavorite = isFavorite
-)
+        id = id,
+        name = name,
+        description = description,
+        thumbnail = thumbnail?.toDbThumbnail(),
+        isFavorite = isFavorite
+    )
 
 private fun List<Character>.toDbCharacters() = map { it.toDbCharacter() }

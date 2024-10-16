@@ -43,10 +43,6 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -62,7 +58,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":data"))
+    implementation(project(":data")) // todo: remove this with dependency injection
+    implementation(libs.androidx.room.ktx)
+
     implementation(project(":domain"))
     implementation(project(":usecases"))
     implementation(libs.androidx.core.ktx)
@@ -75,12 +73,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.coil.compose)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)
-    implementation (libs.logging.interceptor)
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
     implementation(libs.okhttp)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

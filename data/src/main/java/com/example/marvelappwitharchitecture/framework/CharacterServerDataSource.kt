@@ -1,6 +1,6 @@
 package com.example.marvelappwitharchitecture.framework
 
-import com.example.marvelappwitharchitecture.data.datasource.CharacterRemoteDataSource
+import com.example.marvelappwitharchitecture.data.CharacterRemoteDataSource
 import com.example.marvelappwitharchitecture.domain.Character
 import com.example.marvelappwitharchitecture.framework.remote.CharactersService
 import com.example.marvelappwitharchitecture.framework.remote.RemoteCharacter

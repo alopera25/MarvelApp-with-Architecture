@@ -1,4 +1,4 @@
-package com.example.marvelappwitharchitecture.data.datasource
+package com.example.marvelappwitharchitecture.data
 
 import com.example.marvelappwitharchitecture.domain.Character
 

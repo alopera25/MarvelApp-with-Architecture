@@ -1,7 +1,5 @@
 package com.example.marvelappwitharchitecture.data
 
-import com.example.marvelappwitharchitecture.data.datasource.CharacterLocalDataSource
-import com.example.marvelappwitharchitecture.data.datasource.CharacterRemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
@@ -14,7 +12,7 @@ class CharacterRepository(
     val characters: Flow<List<Character>> = localDataSource.character.onEach { localCharacters ->
         if (localCharacters.isEmpty()) {
             val remoteCharacters = characterRemoteDataSource.fetchCharacters(offset = 0, limit = 20)
-            localDataSource.saveCharacter(remoteCharacters!!)
+            localDataSource.saveCharacter(remoteCharacters ?: emptyList())
         }
     }
 
@@ -22,7 +20,9 @@ class CharacterRepository(
         .onEach { character ->
             if (character == null) {
                 val remoteCharacter = characterRemoteDataSource.fetchCharacterById(id)
-                localDataSource.saveCharacter(listOf(remoteCharacter!!))
+                remoteCharacter?.let {
+                    localDataSource.saveCharacter(listOf(it))
+                }
             }
         }
         .filterNotNull()

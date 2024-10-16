@@ -1,4 +1,4 @@
-package com.example.marvelappwitharchitecture.data.datasource
+package com.example.marvelappwitharchitecture.data
 
 import kotlinx.coroutines.flow.Flow
 import com.example.marvelappwitharchitecture.domain.Character

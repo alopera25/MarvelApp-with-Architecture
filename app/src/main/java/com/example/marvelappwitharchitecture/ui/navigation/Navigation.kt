@@ -26,7 +26,7 @@ fun Navigation() {
     val navController = rememberNavController()
     val app = LocalContext.current.applicationContext as App
 
-    val characterRepository= CharacterRepository(
+    val characterRepository = CharacterRepository(
         CharacterServerDataSource(CharactersClient.instance),
         CharacterRoomDataSource(app.db.characterDao()),
     )

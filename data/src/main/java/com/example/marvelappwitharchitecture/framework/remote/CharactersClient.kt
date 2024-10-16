@@ -1,6 +1,6 @@
 package com.example.marvelappwitharchitecture.framework.remote
 
-import com.example.marvelappwitharchitecture.BuildConfig
+import com.example.data.BuildConfig
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType

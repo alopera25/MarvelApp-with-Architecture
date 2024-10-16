@@ -1,14 +1,51 @@
+import java.util.Properties
+
 plugins {
-    id("java-library")
-    alias(libs.plugins.jetbrains.kotlin.jvm)
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.ksp)
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+android {
+    namespace = "com.example.data"
+    compileSdk = 34
+
+    defaultConfig {
+        minSdk = 24
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+
+    android.buildFeatures.buildConfig = true
+    defaultConfig {
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").readText().byteInputStream())
+
+        val marvelApiKey = properties.getProperty("MARVEL_API_KEY", "")
+        buildConfigField("String", "MARVEL_API_KEY", "\"$marvelApiKey\"")
+
+        val marvelPrivateApiKey = properties.getProperty("MARVEL_PRIVATE_API_KEY", "")
+        buildConfigField("String", "MARVEL_PRIVATE_API_KEY", "\"$marvelPrivateApiKey\"")
+    }
 }
 
 dependencies {
     implementation(project(":domain"))
-    implementation (libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.android)
+
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.logging.interceptor)
+
 }

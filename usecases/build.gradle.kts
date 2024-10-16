@@ -9,7 +9,6 @@ java {
 }
 
 dependencies {
-    implementation(project(":data"))
     implementation(project(":domain"))
     implementation (libs.kotlinx.coroutines.android)
 }
