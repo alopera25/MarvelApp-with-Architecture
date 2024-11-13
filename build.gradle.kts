@@ -5,4 +5,6 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
     alias(libs.plugins.androidLibrary) apply false
+    alias(libs.plugins.hilt) apply false
+
 }

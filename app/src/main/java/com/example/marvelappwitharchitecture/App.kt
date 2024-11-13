@@ -3,7 +3,9 @@ package com.example.marvelappwitharchitecture
 import android.app.Application
 import androidx.room.Room
 import com.example.marvelappwitharchitecture.framework.database.CharacterDatabase
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class App : Application() {
 
     lateinit var db: CharacterDatabase
