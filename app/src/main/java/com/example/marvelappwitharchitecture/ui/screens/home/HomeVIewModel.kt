@@ -2,10 +2,10 @@ package com.example.marvelappwitharchitecture.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.marvelappwitharchitecture.domain.Character
-import com.example.marvelappwitharchitecture.stateAsResultIn
-import com.example.marvelappwitharchitecture.Result
-import com.example.marvelappwitharchitecture.usecases.FetchCharactersUseCase
+import dev.alopera.marvelapp.domain.Character
+import dev.alopera.marvelapp.domain.Result
+import dev.alopera.marvelapp.domain.stateAsResultIn
+import dev.alopera.marvelapp.usecases.FetchCharactersUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

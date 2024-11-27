@@ -31,9 +31,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.marvelappwitharchitecture.R
-import com.example.marvelappwitharchitecture.domain.Character
 import com.example.marvelappwitharchitecture.ui.common.AcScaffold
 import com.example.marvelappwitharchitecture.ui.screens.Screen
+import dev.alopera.marvelapp.domain.Character
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
