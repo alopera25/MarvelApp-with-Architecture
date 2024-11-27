@@ -26,7 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.marvelappwitharchitecture.R
-import com.example.marvelappwitharchitecture.Result
+import dev.alopera.marvelapp.domain.Result
 
 @Composable
 fun <T> AcScaffold(

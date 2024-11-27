@@ -2,16 +2,19 @@ package com.example.marvelappwitharchitecture.ui.screens.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.marvelappwitharchitecture.Result
-import com.example.marvelappwitharchitecture.domain.Character
-import com.example.marvelappwitharchitecture.ifSuccess
-import com.example.marvelappwitharchitecture.stateAsResultIn
-import com.example.marvelappwitharchitecture.usecases.FindCharacterByIdUseCase
-import com.example.marvelappwitharchitecture.usecases.ToggleFavoriteUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.alopera.marvelapp.domain.Character
+import dev.alopera.marvelapp.domain.Result
+import dev.alopera.marvelapp.domain.ifSuccess
+import dev.alopera.marvelapp.domain.stateAsResultIn
+import dev.alopera.marvelapp.usecases.FindCharacterByIdUseCase
+import dev.alopera.marvelapp.usecases.ToggleFavoriteUseCase
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailViewModel(
+@HiltViewModel
+class DetailViewModel @Inject constructor(
     id: Int,
     findMovieByIdUseCase: FindCharacterByIdUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase

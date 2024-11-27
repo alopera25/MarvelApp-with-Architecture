@@ -48,4 +48,5 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.logging.interceptor)
 
+    implementation(libs.androidx.room.ktx)
 }
