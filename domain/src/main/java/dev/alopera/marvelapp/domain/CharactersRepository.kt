@@ -3,8 +3,9 @@ package dev.alopera.marvelapp.domain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
-class CharacterRepository(
+class CharacterRepository @Inject constructor(
     private val characterRemoteDataSource: CharacterRemoteDataSource,
     private val localDataSource: CharacterLocalDataSource
 ) {

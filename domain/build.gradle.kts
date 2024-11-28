@@ -10,4 +10,7 @@ java {
 
 dependencies {
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.hilt.core)
 }

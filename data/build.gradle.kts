@@ -41,6 +41,10 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.hilt.core)
+
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
     implementation(libs.retrofit)

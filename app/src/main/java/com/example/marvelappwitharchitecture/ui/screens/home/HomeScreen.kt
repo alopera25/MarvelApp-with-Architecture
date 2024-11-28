@@ -29,6 +29,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.marvelappwitharchitecture.R
 import com.example.marvelappwitharchitecture.ui.common.AcScaffold
@@ -38,7 +39,7 @@ import dev.alopera.marvelapp.domain.Character
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    vm: HomeViewModel,
+    vm: HomeViewModel = hiltViewModel(),
     onClick: (Character) -> Unit
 ) {
     val homeState = rememberHomeState()
