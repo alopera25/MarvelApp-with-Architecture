@@ -32,6 +32,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.marvelappwitharchitecture.R
 import com.example.marvelappwitharchitecture.ui.common.AcScaffold
@@ -39,7 +40,7 @@ import com.example.marvelappwitharchitecture.ui.screens.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
+fun DetailScreen(vm: DetailViewModel = hiltViewModel(), onBack: () -> Unit) {
     val state by vm.state.collectAsState()
     val scrollState = rememberScrollState()
     val detailState = rememberDetailState(state)

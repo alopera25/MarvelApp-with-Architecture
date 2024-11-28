@@ -2,6 +2,7 @@ package com.example.marvelappwitharchitecture.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.alopera.marvelapp.domain.Character
 import dev.alopera.marvelapp.domain.Result
 import dev.alopera.marvelapp.domain.stateAsResultIn
@@ -11,8 +12,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
+import javax.inject.Inject
 
-class HomeViewModel(private val fetchCharactersUseCase: FetchCharactersUseCase) : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val fetchCharactersUseCase: FetchCharactersUseCase) : ViewModel() {
 
     private val uiReady = MutableStateFlow(true)
 

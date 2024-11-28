@@ -6,8 +6,9 @@ import dev.alopera.marvelapp.domain.Character
 import dev.alopera.marvelapp.domain.CharacterRemoteDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class CharacterServerDataSource(
+class CharacterServerDataSource @Inject constructor(
     private val charactersService: CharactersService
 ) : CharacterRemoteDataSource {
 

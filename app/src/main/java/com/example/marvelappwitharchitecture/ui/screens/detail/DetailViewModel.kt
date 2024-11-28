@@ -2,6 +2,7 @@ package com.example.marvelappwitharchitecture.ui.screens.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.HiltAndroidApp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.alopera.marvelapp.domain.Character
 import dev.alopera.marvelapp.domain.Result
@@ -12,10 +13,11 @@ import dev.alopera.marvelapp.usecases.ToggleFavoriteUseCase
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
-@HiltViewModel
+@HiltAndroidApp
 class DetailViewModel @Inject constructor(
-    id: Int,
+    @Named("characterId") id: Int,
     findMovieByIdUseCase: FindCharacterByIdUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase
 ) : ViewModel() {

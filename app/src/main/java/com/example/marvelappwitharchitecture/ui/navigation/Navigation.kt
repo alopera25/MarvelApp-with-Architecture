@@ -46,8 +46,9 @@ fun Navigation() {
             arguments = listOf(navArgument(NavArgs.CharacterId.key) { type = NavType.IntType })
         ) { backStackEntry ->
             val detailViewModel: DetailViewModel = hiltViewModel()
-            val characterId =
+            /*val characterId =
                 requireNotNull(backStackEntry.arguments?.getInt(NavArgs.CharacterId.key))
+            */
             DetailScreen(
                 vm = detailViewModel,
                 onBack = { navController.popBackStack() })

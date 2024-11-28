@@ -7,8 +7,9 @@ import dev.alopera.marvelapp.domain.Character
 import dev.alopera.marvelapp.domain.CharacterLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class CharacterRoomDataSource(private val characterDao: CharacterDao) : CharacterLocalDataSource {
+class CharacterRoomDataSource @Inject constructor (private val characterDao: CharacterDao) : CharacterLocalDataSource {
 
 override val character: Flow<List<Character>> = characterDao.fetchCharacter().map { it.toDomainCharacters() }
 
