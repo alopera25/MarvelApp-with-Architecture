@@ -40,7 +40,7 @@ import com.example.marvelappwitharchitecture.ui.screens.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(vm: DetailViewModel = hiltViewModel(), onBack: () -> Unit) {
+fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
     val state by vm.state.collectAsState()
     val scrollState = rememberScrollState()
     val detailState = rememberDetailState(state)

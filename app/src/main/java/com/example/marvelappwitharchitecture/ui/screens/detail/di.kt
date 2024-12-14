@@ -17,7 +17,7 @@ class DetailViewModelModule {
     @Provides
     @ViewModelScoped
     @Named("characterId")
-    fun provideCharacterId(savedStateHandle: SavedStateHandle): Int? {
+    fun provideCharacterId(savedStateHandle: SavedStateHandle): Int {
         return savedStateHandle[NavArgs.CharacterId.key]
             ?: throw IllegalArgumentException(" CharacterId not found")
     }
