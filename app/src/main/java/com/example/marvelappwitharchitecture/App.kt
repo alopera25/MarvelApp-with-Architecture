@@ -6,15 +6,4 @@ import dagger.hilt.android.HiltAndroidApp
 import dev.alopera.marvelapp.data.framework.database.CharacterDatabase
 
 @HiltAndroidApp
-class App : Application() {
-
-    lateinit var db: CharacterDatabase
-        private set
-
-    override fun onCreate() {
-        super.onCreate()
-
-        db = Room.databaseBuilder(this, CharacterDatabase::class.java, "character-db")
-            .build()
-    }
-}
+class App : Application()

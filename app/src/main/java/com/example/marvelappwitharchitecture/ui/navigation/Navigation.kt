@@ -23,18 +23,13 @@ import dev.alopera.marvelapp.usecases.FetchCharactersUseCase
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    val app = LocalContext.current.applicationContext as App
 
-    val characterRepository = CharacterRepository(
-        CharacterServerDataSource(CharactersClient.instance),
-        CharacterRoomDataSource(app.db.characterDao()),
-    )
 
     NavHost(navController = navController, startDestination = NavScreen.Home.route) {
 
         composable(NavScreen.Home.route) {
             HomeScreen(
-                viewModel { HomeViewModel(FetchCharactersUseCase(characterRepository)) },
+                vm = hiltViewModel(),
                 onClick = { character ->
                     navController.navigate(NavScreen.Detail.createRoute(character.id!!))
                 }

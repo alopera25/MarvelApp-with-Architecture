@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
-@HiltAndroidApp
+@HiltViewModel
 class DetailViewModel @Inject constructor(
     @Named("characterId") id: Int,
     findMovieByIdUseCase: FindCharacterByIdUseCase,
