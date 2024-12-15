@@ -1,6 +1,5 @@
 package com.example.marvelappwitharchitecture.data.datasource
 
-
 import com.example.marvelappwitharchitecture.domain.Character
 
 interface CharacterRemoteDataSource {

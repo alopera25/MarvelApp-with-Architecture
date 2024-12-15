@@ -29,6 +29,11 @@ private fun DbCharacter.toDomainCharacter() = Character(
     isFavorite = isFavorite
 )
 
+private fun String.toDbThumbnail() = Thumbnail(
+    path = substringBeforeLast("."),
+    extension = substringAfterLast(".")
+)
+
 private fun List<DbCharacter>.toDomainCharacters() = map { it.toDomainCharacter() }
 
 private fun String.toDbThumbnail() = Thumbnail(
