@@ -12,4 +12,7 @@ dependencies {
     implementation(project(":domain"))
     implementation (libs.kotlinx.coroutines.android)
     implementation(libs.hilt.core)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.junit.jupiter)
 }
