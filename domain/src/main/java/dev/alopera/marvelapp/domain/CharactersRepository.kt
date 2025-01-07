@@ -9,7 +9,8 @@ class CharacterRepository @Inject constructor(
     private val characterRemoteDataSource: CharacterRemoteDataSource,
     private val localDataSource: CharacterLocalDataSource
 ) {
-    val characters: Flow<List<Character>> = localDataSource.character.onEach { localCharacters ->
+    val characters: Flow<List<Character>>
+    get() = localDataSource.character.onEach { localCharacters ->
         if (localCharacters.isEmpty()) {
             val remoteCharacters = characterRemoteDataSource.fetchCharacters(offset = 0, limit = 20)
             localDataSource.saveCharacter(remoteCharacters ?: emptyList())

@@ -11,4 +11,8 @@ java {
 dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.hilt.core)
+    testImplementation(libs.junit.junit)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.kotlin)
 }
