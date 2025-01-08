@@ -1,5 +1,6 @@
 package com.example.marvelappwitharchitecture.ui.screens.home
 
+import android.Manifest
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,19 +23,27 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.marvelappwitharchitecture.R
 import com.example.marvelappwitharchitecture.ui.common.AcScaffold
+import com.example.marvelappwitharchitecture.ui.common.PermissionRequestEffect
+import com.example.marvelappwitharchitecture.ui.common.getRegion
 import com.example.marvelappwitharchitecture.ui.screens.Screen
 import dev.alopera.marvelapp.domain.Character
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,13 +53,30 @@ fun HomeScreen(
 ) {
     val homeState = rememberHomeState()
 
+    val appName = stringResource(id = R.string.app_name)
+    var appBarTitle by remember { mutableStateOf(appName) }
+    val ctx = LocalContext.current.applicationContext
+    val coroutineScope = rememberCoroutineScope()
+    PermissionRequestEffect(permission = Manifest.permission.ACCESS_COARSE_LOCATION) { granted ->
+        if (granted) {
+            coroutineScope.launch {
+                val region = ctx.getRegion()
+                appBarTitle = "$appBarTitle ($region)"
+            }
+        } else {
+            appBarTitle = "$appBarTitle (Permission denied)"
+        }
+    }
+
+
+
     Screen {
         val state by vm.state.collectAsState()
         AcScaffold(
             state = state,
             topBar = {
                 TopAppBar(
-                    title = { Text(text = stringResource(id = R.string.app_name)) },
+                    title = { Text(text = appBarTitle) },
                     scrollBehavior = homeState.scrollBehavior,
                 )
             },
