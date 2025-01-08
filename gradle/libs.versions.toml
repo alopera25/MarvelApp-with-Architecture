@@ -25,6 +25,8 @@ material = "1.12.0"
 mockitoKotlin = "5.3.1"
 junitJupiter = "5.8.1"
 junitJunit = "4.12"
+coroutines = "1.8.0"
+runtimeAndroid = "1.6.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -61,6 +63,9 @@ material = { group = "com.google.android.material", name = "material", version.r
 mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
 junit-junit = { group = "junit", name = "junit", version.ref = "junitJunit" }
+kotlinx-coroutines-test =  { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+turbine = { group = "app.cash.turbine", name = "turbine", version = "1.1.0" }
+androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
