@@ -1,10 +1,11 @@
 package com.example.marvelappwitharchitecture.ui.screens.home
 
-import android.service.media.MediaBrowserService
+import dev.alopera.marvelapp.domain.Result
 import app.cash.turbine.test
 import com.example.marvelappwitharchitecture.ui.screens.detail.DetailViewModel
 import dev.alopera.marvelapp.usecases.FindCharacterByIdUseCase
 import dev.alopera.marvelapp.usecases.ToggleFavoriteUseCase
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -40,8 +41,8 @@ class DetailViewModelTest {
     @Test
     fun `UI is updated with the character on start`() = runTest {
         vm.state.test {
-   //         assertEquals(MediaBrowserService.Result.Loading, awaitItem())
-   //         assertEquals(MediaBrowserService.Result.Success(character), awaitItem())
+                    assertEquals(Result.Loading, awaitItem())
+                    assertEquals(Result.Success(character), awaitItem())
         }
     }
 
